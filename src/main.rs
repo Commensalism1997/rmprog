@@ -80,7 +80,7 @@ fn count_dir(path: impl AsRef<Path>) -> Result<usize, Box<dyn std::error::Error>
     for e in readdir {
         let e = e?;
         if e.file_type()?.is_dir() {
-            let n = count_dir(&e.path())?;
+            let n = count_dir(e.path())?;
             count += n + 1;
             continue;
         }
