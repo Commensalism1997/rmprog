@@ -1,10 +1,10 @@
 [package]
-name = "prm"
+name = "rmprog"
 version = "0.1.0"
 authors = ["Commensalism"]
 description = "CLI utility for asynchronously removing directories with a progress bar"
 readme = "README.md"
-repository = "https://github.com/Commensalism1997/prm"
+repository = "https://github.com/Commensalism1997/rmprog"
 license = "GPL-3.0-or-later"
 categories = ["command-line-utilities"]
 edition = "2024"
