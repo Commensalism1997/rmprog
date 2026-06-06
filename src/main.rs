@@ -21,6 +21,11 @@ fn main() -> Result<ExitCode, Box<dyn std::error::Error>> {
     let countpb = mpb.add(style::themed_progressbar(cli.path.len() as u64).with_message("Deleting..."));
     let mut success = true;
 
+    if cli.path.is_empty() {
+        println!("Usage: rmprog [-v] <PATH>...");
+        return Ok(ExitCode::SUCCESS)
+    }
+
     for ipath in cli.path
     {
         if !fs::exists(&ipath)? {
