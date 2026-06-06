@@ -25,6 +25,11 @@ async fn main() -> Result<ExitCode, Box<dyn std::error::Error>> {
     let mut handler: Vec<JoinHandle<Result<(), io::Error>>> = Vec::new();
     let success = Arc::new(AtomicBool::new(true));
 
+    if cli.path.is_empty() {
+        println!("Usage: rmprog [-v] <PATH>...");
+        return Ok(ExitCode::SUCCESS)
+    }
+
     for ipath in cli.path
     {
         if !fs::try_exists(&ipath).await? {
