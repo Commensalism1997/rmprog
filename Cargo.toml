@@ -6,6 +6,7 @@ description = "CLI utility for asynchronously removing directories with a progre
 readme = "README.md"
 repository = "https://github.com/Commensalism1997/rmprog"
 license = "GPL-3.0-or-later"
+keywords = ["remove", "delete", "progress"]
 categories = ["command-line-utilities"]
 edition = "2024"
 
