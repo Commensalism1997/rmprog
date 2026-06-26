@@ -4,7 +4,7 @@
 
 ## Syntax
 
-### **WARNING: If `PATH` is a symlink to a directory, it will delete the linked directory's contents! It will not follow symlinks inside the directories being deleted or symlinks to files.**
+### NOTE: If `PATH` is a symlink to a directory, only the symlink will be deleted.
 
 ```bash
 rmprog [-v] <PATH>...

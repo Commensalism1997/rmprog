@@ -41,7 +41,8 @@ fn main() -> Result<ExitCode, Box<dyn std::error::Error>> {
             Some(n) => countpb.set_message(format!("Deleting {}...", n.to_string_lossy())),
             None => countpb.set_message("Deleting...")
         }
-        if ipath.is_dir() {
+        let ipath = PathBuf::from(ipath.as_os_str().to_string_lossy().trim_end_matches('/'));
+        if ipath.is_dir() && !fs::symlink_metadata(&ipath)?.is_symlink() {
             let spinner = mpb.add(style::themed_spinner()).with_message("Analyzing...");
             spinner.enable_steady_tick(Duration::from_millis(100));
             let entry_count = count_dir(&ipath)? + 1;
