@@ -41,7 +41,8 @@ async fn main() -> Result<ExitCode, Box<dyn std::error::Error>> {
             countpb.set_length(countpb.length().expect("Total bar should have a length") - 1);
             continue;
         }
-        if ipath.is_dir() {
+        let ipath = PathBuf::from(ipath.as_os_str().to_string_lossy().trim_end_matches('/'));
+        if ipath.is_dir() && !fs::symlink_metadata(&ipath).await?.is_symlink() {
             let spinner = mpb.add(style::themed_spinner()).with_message("Analyzing...");
             spinner.enable_steady_tick(Duration::from_millis(100));
             let entry_count = count_dir(&ipath).await? + 1;
@@ -100,6 +101,7 @@ async fn async_remove_file(p: impl AsRef<Path>, verbose: bool, pfname: Option<Os
 
 fn prev_remove_dir<'a>(path: &'a (impl AsRef<Path> + Sync), pb: &'a ProgressBar, spinner: &'a ProgressBar, verbose: bool, mpb: &'a MultiProgress) -> Pin<Box<dyn Future<Output = io::Result<()>> + Send + 'a>> {
     Box::pin(async move {
+        let path = path.as_ref();
         let mut reader = fs::read_dir(path).await?;
         while let Some(e) = reader.next_entry().await? {
             if e.file_type().await?.is_dir() {
@@ -111,7 +113,7 @@ fn prev_remove_dir<'a>(path: &'a (impl AsRef<Path> + Sync), pb: &'a ProgressBar,
             pb.inc(1);
             if verbose { mpb.println(format!("Removed file {}", e.file_name().to_string_lossy()))?; }
         }
-        let pfname = path.as_ref().file_name();
+        let pfname = path.file_name();
         match pfname {
             Some(n) => {
                 spinner.set_message(format!("Removing directory {}...", n.to_string_lossy()));
