@@ -17,10 +17,10 @@ It will work on both files and directories, with progress bar obviously being on
 Provided you have cargo and have .cargo/bin in $PATH:
 
 ```bash
-cargo install --git https://github.com/Commensalism1997/rmprog.git
+cargo install --locked --git https://github.com/Commensalism1997/rmprog.git
 ```
 
 Async ver. (EXPERIMENTAL):
 ```bash
-cargo install --git https://github.com/Commensalism1997/rmprog.git --branch async
+cargo install --locked --git https://github.com/Commensalism1997/rmprog.git --branch async
 ```
